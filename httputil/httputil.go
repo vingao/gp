@@ -1,4 +1,4 @@
-package http
+package httputil
 
 import (
 	"fmt"
@@ -8,8 +8,7 @@ import (
 )
 
 func Echo(r *http.Request) string {
-	var e string
-	e += fmt.Sprintf("%s %s %s\n", r.Method, r.URL, r.Proto)
+	e := fmt.Sprintf("%s %s %s\n", r.Method, r.URL, r.Proto)
 	for k, v := range r.Header {
 		e += fmt.Sprintf("Header[%q] = %q\n", k, v)
 	}
@@ -23,7 +22,9 @@ func Echo(r *http.Request) string {
 		e += fmt.Sprintf("Form[%q] = %q\n", k, v)
 	}
 	e += "\n"
-	body, _ := ioutil.ReadAll(r.Body)
-	e += fmt.Sprintf("r.Body = %s\n", body)
+
+	if body, _ := ioutil.ReadAll(r.Body); len(body) != 0 {
+		e += fmt.Sprintf("r.Body = %s\n", body)
+	}
 	return e
 }
