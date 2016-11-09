@@ -1,3 +1,4 @@
+// Package httputil provides http-related utilities
 package httputil
 
 import (
@@ -7,6 +8,7 @@ import (
 	"net/http"
 )
 
+// Echo encapsulates http request headers, form values and body, if any, and formats them into a string
 func Echo(r *http.Request) string {
 	e := fmt.Sprintf("%s %s %s\n", r.Method, r.URL, r.Proto)
 	for k, v := range r.Header {
